@@ -28,6 +28,7 @@ form .input-submit {
   border: none;
   outline: none;
   border-radius: 2rem;
+  color: white;
 }
 
 form select {
