@@ -19,7 +19,6 @@ function App() {
   
   const addEspressoMenuName = () => {
     const expressoMenuName = $('#espresso-menu-name').value;      
-    // 빈 값일때 예외 처리
     if (expressoMenuName === '') {
       alert('값을 입력해주세요!');
       return;
@@ -28,9 +27,9 @@ function App() {
     this.menu.push({ name: expressoMenuName });
     store.setLocalStorage(this.menu);
 
-    const menuItemTemplate = (expressoMenuName) => {
+    const menuItemTemplate = (expressoMenuName, index) => {
       return (`
-        <li class="menu-list-item d-flex items-center py-2">
+        <li data-menu-id="${index}" class="menu-list-item d-flex items-center py-2">
           <span class="w-100 pl-2 menu-name">${expressoMenuName}</span>
           <button
             type="button"
@@ -48,20 +47,19 @@ function App() {
       `);
     }
   
-    const templates = this.menu.map(item => menuItemTemplate(item.name)).join('');
-    console.log(templates);
+    const templates = this.menu.map((item, index) => menuItemTemplate(item.name, index)).join('');
     $('#espresso-menu-list').innerHTML = templates;
-  
     updateMenuCount();
-  
-    // 엔터치면 input 값을 비워준다.
     $('#espresso-menu-name').value = '';
   };
 
   const editMenuName = (event) => {
+    const menuId = event.target.closest('li').dataset.menuId;
     const $menuName = event.target.closest('li').querySelector('.menu-name')
     const edittedMenuName = prompt('수정할 메뉴명을 입력하세요', $menuName.innerText);
     if (edittedMenuName == null) return;
+    this.menu[menuId].name = edittedMenuName;
+    store.setLocalStorage(this.menu);
     $menuName.innerText = edittedMenuName;
   };
 
