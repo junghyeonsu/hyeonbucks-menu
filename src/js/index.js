@@ -124,7 +124,10 @@ function App() {
     const isCategoryButton = event.target.classList.contains('cafe-category-name');
 
     if (isCategoryButton) {
-      console.log(event.target.dataset.categoryName);
+      const clickedCategoryName = event.target.dataset.categoryName;
+      $('#category-title').innerText = `${event.target.innerText} 메뉴 관리`;
+      this.currentCategory = clickedCategoryName;
+      render();
     }
 
   })
