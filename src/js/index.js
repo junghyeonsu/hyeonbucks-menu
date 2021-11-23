@@ -10,9 +10,16 @@ const store = {
 };
 
 function App() {
-  this.menu = [];
+  this.menu = {
+    espresso: [],
+    frappuccino: [],
+    blended: [],
+    teavana: [],
+    desert: [],
+  };
+  this.currentCategory = 'espresso';
   this.init = () => {
-    if (store.getLocalStorage('menu').length > 1) {
+    if (store.getLocalStorage('menu')) {
       this.menu = store.getLocalStorage('menu');
     }
     render();
@@ -39,7 +46,7 @@ function App() {
       `);
     }
 
-    const templates = this.menu.map((item, index) => menuItemTemplate(item.name, index)).join('');
+    const templates = this.menu[this.currentCategory].map((item, index) => menuItemTemplate(item.name, index)).join('');
     $('#espresso-menu-list').innerHTML = templates;
 
     updateMenuCount();
@@ -57,7 +64,7 @@ function App() {
       return;
     }
   
-    this.menu.push({ name: expressoMenuName });
+    this.menu[this.currentCategory].push({ name: expressoMenuName });
     store.setLocalStorage(this.menu);
 
     render();
@@ -70,7 +77,7 @@ function App() {
     const $menuName = event.target.closest('li').querySelector('.menu-name')
     const edittedMenuName = prompt('수정할 메뉴명을 입력하세요', $menuName.innerText);
     if (edittedMenuName == null) return;
-    this.menu[menuId].name = edittedMenuName;
+    this.menu[this.currentCategory][menuId].name = edittedMenuName;
     store.setLocalStorage(this.menu);
     $menuName.innerText = edittedMenuName;
   };
@@ -78,7 +85,7 @@ function App() {
   const removeMenuName = (event) => {
     if(confirm('정말로 삭제하시겠습니까?')) {
       const menuId = event.target.closest('li').dataset.menuId;
-      this.menu.splice(menuId, 1);
+      this.menu[this.currentCategory].splice(menuId, 1);
       store.setLocalStorage(this.menu);
       event.target.closest('li').remove();
       updateMenuCount();
@@ -112,6 +119,15 @@ function App() {
 
   $('#espresso-menu-submit-button')
     .addEventListener('click', addEspressoMenuName);
+
+  $('nav').addEventListener('click', (event) => {
+    const isCategoryButton = event.target.classList.contains('cafe-category-name');
+
+    if (isCategoryButton) {
+      console.log(event.target.dataset.categoryName);
+    }
+
+  })
 }
 
 const app = new App();
