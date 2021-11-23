@@ -3,10 +3,6 @@
 - Github: https://github.com/blackcoffee-study/moonbucks-menu
 - Udemy: https://www.udemy.com/course/vanilla-js-lv1/
 
-### 이 강좌를 통해서 배운 것
-
-1. 우선 요구사항을 보고 무엇을 구현해야 하는지, 어떤 방향으로 진행할 지 결정한다.
-
 ## **🎯 step1 요구사항 - 돔 조작과 이벤트 핸들링으로 메뉴 관리하기**
 
 - [ ] 에스프레소 메뉴에 새로운 메뉴를 확인 버튼 또는 엔터키 입력으로 추가한다.
