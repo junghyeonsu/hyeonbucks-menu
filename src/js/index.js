@@ -26,10 +26,10 @@ function App() {
   }
 
   const render = () => {
-    const menuItemTemplate = (expressoMenuName, index) => {
+    const menuItemTemplate = (menuName, index) => {
       return (`
         <li data-menu-id="${index}" class="menu-list-item d-flex items-center py-2">
-          <span class="w-100 pl-2 menu-name">${expressoMenuName}</span>
+          <span class="w-100 pl-2 menu-name">${menuName}</span>
           <button
             type="button"
             class="bg-gray-50 text-gray-500 text-sm mr-1 menu-edit-button"
@@ -47,29 +47,29 @@ function App() {
     }
 
     const templates = this.menu[this.currentCategory].map((item, index) => menuItemTemplate(item.name, index)).join('');
-    $('#espresso-menu-list').innerHTML = templates;
+    $('#menu-list').innerHTML = templates;
 
     updateMenuCount();
   }
 
   const updateMenuCount = () => {
-    const menuCount = $('#espresso-menu-list').querySelectorAll('li').length;
+    const menuCount = $('#menu-list').querySelectorAll('li').length;
     $('.menu-count').innerText = `총 ${menuCount}개`;
   };
   
-  const addEspressoMenuName = () => {
-    const expressoMenuName = $('#espresso-menu-name').value;      
-    if (expressoMenuName === '') {
+  const addMenuName = () => {
+    const menuName = $('#menu-name').value;      
+    if (menuName === '') {
       alert('값을 입력해주세요!');
       return;
     }
   
-    this.menu[this.currentCategory].push({ name: expressoMenuName });
+    this.menu[this.currentCategory].push({ name: menuName });
     store.setLocalStorage(this.menu);
 
     render();
   
-    $('#espresso-menu-name').value = '';
+    $('#menu-name').value = '';
   };
 
   const editMenuName = (event) => {
@@ -92,7 +92,7 @@ function App() {
     }
   };
 
-  $('#espresso-menu-list')
+  $('#menu-list')
     .addEventListener('click', (event) => {
       const checkButtonType = (type) => event.target.classList.contains(`menu-${type}-button`);
 
@@ -105,20 +105,20 @@ function App() {
       }
     });
 
-  $('#espresso-menu-form')
+  $('#menu-form')
     .addEventListener('submit', (event) => {
       event.preventDefault();
     });
 
-  $('#espresso-menu-name')
+  $('#menu-name')
     .addEventListener('keypress', (event) => {
       if (event.key === 'Enter') {
-        addEspressoMenuName();
+        addMenuName();
       }
     });
 
-  $('#espresso-menu-submit-button')
-    .addEventListener('click', addEspressoMenuName);
+  $('#menu-submit-button')
+    .addEventListener('click', addMenuName);
 
   $('nav').addEventListener('click', (event) => {
     const isCategoryButton = event.target.classList.contains('cafe-category-name');
